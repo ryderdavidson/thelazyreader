@@ -8,4 +8,22 @@ server(Port) :-
   http_server(http_dispatch, [port(Port)]).
 
 homepage(_Request) :-
-  reply_html_page(title('The Lazy Reader'),[h1('The Lazy Reader')]).
+  format('Content-type: text/html~n~n'),
+  print_html([
+    '<html>',
+      '<head>',
+        '<title>',
+          'The Lazy Reader',
+        '</title>',
+      '</head>',
+      '<body>',
+        '<h1>', 'The Lazy Reader', '</h1>',
+        '<p>', 'Copy and paste article text in the form below.', '</p>',
+        '<form id="articleform">',
+          '<textarea rows="4" cols="50">','</textarea>',
+          '<br>','<br>',
+          '<input type = "submit" value = "Summarize" />',
+        '</form>',
+      '</body>',
+    '</html>'
+  ]).
