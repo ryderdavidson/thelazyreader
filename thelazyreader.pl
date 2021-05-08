@@ -2,7 +2,7 @@
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/html_write)).
 
-:- http_handler(root(thelazyreader), homepage, []).
+:- http_handler('/', homepage, []).
 :- http_handler('/summary', summarypage, []).
 
 server(Port) :-
@@ -29,19 +29,19 @@ homepage(_Request) :-
     '</html>'
   ]).
 
-  summarypage(_Request) :-
-    format('Content-type: text/html~n~n'),
-    print_html([
-    '<html>',
-      '<head>',
-        '<title>',
-          'The Lazy Reader',
-        '</title>',
-      '</head>',
-      '<body>',
-        '<h1>', 'Text Summary', '</h1>',
-        '<p>', 'This is where the summary will go!', '</p>',
-        '<a href="/thelazyreader">', 'Summarize again', '</a>',
-      '</body>',
-    '</html>'
-    ]).
+summarypage(_Request) :-
+  format('Content-type: text/html~n~n'),
+  print_html([
+  '<html>',
+    '<head>',
+      '<title>',
+        'The Lazy Reader',
+      '</title>',
+    '</head>',
+    '<body>',
+      '<h1>', 'Text Summary', '</h1>',
+      '<p>', 'This is where the summary will go!', '</p>',
+      '<a href="/thelazyreader">', 'Summarize again', '</a>',
+    '</body>',
+  '</html>'
+  ]).
