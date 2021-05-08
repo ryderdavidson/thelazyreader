@@ -30,4 +30,4 @@ Start the server:
 
 Open your browser to:
 
-http://localhost:5000/thelazyreader
+http://localhost:5000
