@@ -2,6 +2,7 @@
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/html_write)).
+:- use_module(library(http/http_parameters)).
 
 :- http_handler('/', homepage, []).
 :- http_handler('/summary', summarypage, []).
@@ -22,7 +23,7 @@ homepage(_Request) :-
         '<h1>', 'The Lazy Reader', '</h1>',
         '<p>', 'Summarize any text!', '</p>',
         '<form id="articleform" action="/summary">',
-          '<textarea rows="4" cols="50">', 'Copy your text here...','</textarea>',
+          '<textarea name="txt" rows="4" cols="50">', 'Copy your text here...','</textarea>',
           '<br>','<br>',
           '<input type = "submit" value = "Summarize" />',
         '</form>',
@@ -30,7 +31,8 @@ homepage(_Request) :-
     '</html>'
   ]).
 
-summarypage(_Request) :-
+summarypage(Request) :-
+  http_parameters(Request, [txt(Txt, [ optional(true) ])]),
   format('Content-type: text/html~n~n'),
   print_html([
   '<html>',
@@ -41,8 +43,8 @@ summarypage(_Request) :-
     '</head>',
     '<body>',
       '<h1>', 'Text Summary', '</h1>',
-      '<p>', 'This is where the summary will go!', '</p>',
-      '<a href="/thelazyreader">', 'Summarize again', '</a>',
+      '<p>', Txt, '</p>',
+      '<a href="/">', 'Summarize again', '</a>',
     '</body>',
   '</html>'
   ]).
