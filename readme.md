@@ -14,6 +14,15 @@ https://www.swi-prolog.org/download/stable
 git clone https://github.com/KnowikiApps/thelazyreader.git
 ```
 
+## Install the WordNet prolog pack
+
+```bash
+swipl
+```
+```prolog
+?- pack_install(wordnet).
+```
+
 # Running the application
 
 Navigate your terminal emulator to the `thelazyreader` project directory

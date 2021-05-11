@@ -1,4 +1,5 @@
-:- consult(wordnet/wnload).
+:- setenv('WNDB', 'wordnet').
+:- use_module(library(wn)).
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/html_write)).
