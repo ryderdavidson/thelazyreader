@@ -36,6 +36,8 @@ homepage(_Request) :-
 summarypage(Request) :-
   http_parameters(Request, [txt(Txt, [ optional(true) ])]),
   parse_string(Txt, ParsedTxt),
+  flatten(ParsedTxt, FlatTxt),
+  atomics_to_string(FlatTxt, ' ', Paragraph),
   format('Content-type: text/html~n~n'),
   print_html([
   '<html>',
@@ -46,7 +48,7 @@ summarypage(Request) :-
     '</head>',
     '<body>',
       '<h1>', 'Text Summary', '</h1>',
-      '<p>', ParsedTxt, '</p>',
+      '<p>', Paragraph, '</p>',
       '<a href="/">', 'Summarize again', '</a>',
     '</body>',
   '</html>'
