@@ -1,5 +1,6 @@
 parse_string(Input, Output) :-
-    tokenize_atom(Input, Output).
+    tokenize_atom(Input, TokenizedInput),
+    list_sentences(TokenizedInput, ., Output).
 
 list_sentences(Input, Delimiter, Output) :-
     list_sentences_r(Input, Delimiter, Output2),
