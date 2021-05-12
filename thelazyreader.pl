@@ -4,6 +4,7 @@
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/html_write)).
 :- use_module(library(http/http_parameters)).
+:- consult(parser).
 
 :- http_handler('/', homepage, []).
 :- http_handler('/summary', summarypage, []).
@@ -34,6 +35,7 @@ homepage(_Request) :-
 
 summarypage(Request) :-
   http_parameters(Request, [txt(Txt, [ optional(true) ])]),
+  parse_string(Txt, ParsedTxt),
   format('Content-type: text/html~n~n'),
   print_html([
   '<html>',
@@ -44,7 +46,7 @@ summarypage(Request) :-
     '</head>',
     '<body>',
       '<h1>', 'Text Summary', '</h1>',
-      '<p>', Txt, '</p>',
+      '<p>', ParsedTxt, '</p>',
       '<a href="/">', 'Summarize again', '</a>',
     '</body>',
   '</html>'
