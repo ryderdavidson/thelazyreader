@@ -24,7 +24,7 @@ homepage(_Request) :-
         '<h1>', 'The Lazy Reader', '</h1>',
         '<p>', 'Summarize any text!', '</p>',
         '<form id="articleform" action="/summary">',
-          '<textarea name="txt" rows="4" cols="50">', 'Copy your text here...','</textarea>',
+          '<textarea name="txt" placeholder="Copy your text here..." rows="4" cols="50">','</textarea>',
           '<br>','<br>',
           '<input type = "submit" value = "Summarize" />',
         '</form>',
