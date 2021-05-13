@@ -1,4 +1,3 @@
-
 parse_string(Input, Output) :-
     tokenize_atom(Input, TokenizedInput),
     convert_to_strings(TokenizedInput, StringyOutput),
@@ -23,5 +22,3 @@ convert_to_strings([H|T], [H1|T1]) :-
 
 clean(Input, EndWords, Output) :-
     findall(X, (member(X, Input), not(member(X, EndWords))), Output).
-
-

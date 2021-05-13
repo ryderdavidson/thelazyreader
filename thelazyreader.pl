@@ -7,6 +7,9 @@
 
 :- http_handler('/', homepage, []).
 :- http_handler('/summary', summarypage, []).
+:- ensure_loaded(parser).
+:- ensure_loaded(look_up_list).
+
 
 server(Port) :-
   http_server(http_dispatch, [port(Port)]).
@@ -34,6 +37,8 @@ homepage(_Request) :-
 
 summarypage(Request) :-
   http_parameters(Request, [txt(Txt, [ optional(true) ])]),
+  parse_string(Txt, Output),
+  handle_all_sentences(Output, Weights),
   format('Content-type: text/html~n~n'),
   print_html([
   '<html>',
