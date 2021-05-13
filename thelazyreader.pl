@@ -8,6 +8,9 @@
 
 :- http_handler('/', homepage, []).
 :- http_handler('/summary', summarypage, []).
+:- ensure_loaded(parser).
+:- ensure_loaded(look_up_list).
+
 
 server(Port) :-
   http_server(http_dispatch, [port(Port)]).
