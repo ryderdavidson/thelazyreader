@@ -34,7 +34,7 @@ lookupList([X|T],ListOfGloss) :-
     add_head(ListOfGloss1,TokenizedListofGloss,ListOfGloss).  
 
 errorHandler(WordNotFound, DummyOutput) :- 
-    DummyOutput = 'NOT FOUND'.
+    DummyOutput = WordNotFound.
 
 add_head([],X,[X]).
 add_head(List, Item, [Item|List]).
