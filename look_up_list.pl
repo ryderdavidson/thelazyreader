@@ -3,15 +3,14 @@
 get_summary(Text, Summary) :-
     handle_all_sentences(Text, Summary).
     
-
 handle_all_sentences([], OutputWeights). % utility handles list of list
 handle_all_sentences([List1|T], OutputWeights) :-
     lookupList(List1,TokenizedListofGloss),
     handle_all_Gloss(TokenizedListofGloss, StringGloss),
     handle_all_Intersection(StringGloss, List1, IntersectionList),
-    weight(IntersectionList, OutputWeights).
-
-
+    weight(IntersectionList, CurrentWeight),
+    handle_all_sentences(T, OutputWeights1),
+    add_head(OutputWeights1, CurrentWeight, OutputWeights).
 
 handle_all_Gloss([], Output). % utility handles list of list
 handle_all_Gloss([List1|T], Output) :-
@@ -25,14 +24,17 @@ atom_to_String([Head|Tail], Output) :-
     atom_to_String(Tail, Output1),
     add_head(Output1, Stringed, Output).
 
-
 lookupList([],ListOfGloss).
 lookupList([X|T],ListOfGloss) :-
     string_to_atom(X,Atomized),
-	wordnet:s(Y,_A,Atomized,_B,_C,_D), wordnet:g(Y,Z),
+	(wordnet:s(Y,_A,Atomized,_B,_C,_D) ; errorHandler(Atomized, WordNotFound)),
+    (wordnet:g(Y,Z) ; errorHandler(WordNotFound, Z)),
  	lookupList(T,ListOfGloss1),
     tokenize_atom(Z, TokenizedListofGloss),
-    add_head(ListOfGloss1,TokenizedListofGloss,ListOfGloss). 
+    add_head(ListOfGloss1,TokenizedListofGloss,ListOfGloss).  
+
+errorHandler(WordNotFound, DummyOutput) :- 
+    DummyOutput = WordNotFound.
 
 add_head([],X,[X]).
 add_head(List, Item, [Item|List]).

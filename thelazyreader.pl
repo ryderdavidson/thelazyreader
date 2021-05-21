@@ -51,7 +51,7 @@ summarypage(Request) :-
     '</head>',
     '<body>',
       '<h1>', 'Text Summary', '</h1>',
-      '<p>', Paragraph, '</p>',
+      '<p>', Weights, '</p>',
       '<a href="/">', 'Summarize again', '</a>',
     '</body>',
   '</html>'
