@@ -27,7 +27,7 @@ atom_to_String([Head|Tail], Output) :-
 lookupList([],ListOfGloss).
 lookupList([X|T],ListOfGloss) :-
     string_to_atom(X,Atomized),
-	(wordnet:s(Y,_A,Atomized,_B,_C,_D) ; errorHandler(Atomized, Y)),
+	(wordnet:s(Y,_A,Atomized,_B,_C,_D) ; errorHandler(Atomized, WordNotFound)),
     (wordnet:g(Y,Z) ; errorHandler(WordNotFound, Z)),
  	lookupList(T,ListOfGloss1),
     tokenize_atom(Z, TokenizedListofGloss),
