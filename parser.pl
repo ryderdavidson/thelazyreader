@@ -22,3 +22,9 @@ convert_to_strings([H|T], [H1|T1]) :-
 
 clean(Input, EndWords, Output) :-
     findall(X, (member(X, Input), not(member(X, EndWords))), Output).
+
+% string list function
+
+get_sentence_strings(Input, Output) :-
+    split_string(Input, ".", ".", Output).
+
