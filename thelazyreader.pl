@@ -43,6 +43,10 @@ summarypage(Request) :-
   parse_string(Txt, SList),
   handle_all_sentences(SList, Wghts),
   get_summary(Wghts, Txt, Summ),
+  nth0(0, Summ, A),
+  nth0(1, Summ, B),
+  nth0(2, Summ, C),
+  nth0(3, Summ, D),
   format('Content-type: text/html~n~n'),
   print_html([
   '<html>',
@@ -53,7 +57,7 @@ summarypage(Request) :-
     '</head>',
     '<body>',
       '<h1>', 'Text Summary', '</h1>',
-      '<p>', Summ, '</p>',
+      '<p>',A, '. ',B, '. ', C, '. ', D, '. ','</p>',
       '<a href="/">', 'Summarize again', '</a>',
     '</body>',
   '</html>'
