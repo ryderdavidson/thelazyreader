@@ -4,12 +4,14 @@
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/html_write)).
 :- use_module(library(http/http_parameters)).
-:- consult(parser).
+% :- consult(parser).
 
 :- http_handler('/', homepage, []).
 :- http_handler('/summary', summarypage, []).
+
 :- ensure_loaded(parser).
 :- ensure_loaded(look_up_list).
+:- ensure_loaded(summary).
 
 
 server(Port) :-
@@ -38,8 +40,9 @@ homepage(_Request) :-
 
 summarypage(Request) :-
   http_parameters(Request, [txt(Txt, [ optional(true) ])]),
-  parse_string(Txt, Output),
-  handle_all_sentences(Output, Weights),
+  parse_string(Txt, SList),
+  handle_all_sentences(SList, Wghts),
+  get_summary(Wghts, Txt, Summ),
   format('Content-type: text/html~n~n'),
   print_html([
   '<html>',
@@ -50,7 +53,7 @@ summarypage(Request) :-
     '</head>',
     '<body>',
       '<h1>', 'Text Summary', '</h1>',
-      '<p>', Weights, '</p>',
+      '<p>', Summ, '</p>',
       '<a href="/">', 'Summarize again', '</a>',
     '</body>',
   '</html>'
