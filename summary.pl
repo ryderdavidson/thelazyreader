@@ -1,12 +1,14 @@
-get_summary_r([], [], _Count, _Weights, _Sentences, _Output).
-get_summary_r([WH|WT],[SH|ST], Weights, Sentences, Count, Output):-
-  (Count < 4, max_member(WH, Weights)) -> (
-      C is Count + 1,
-      selectchk(WH, Weights, NW),
-      selectchk(SH, Sentences, NS),
-      append(A,[SH], Output),
-      get_summary_r(NW, NS, NW, NS, C, A)
-    );get_summary_r(WT, ST, Weights, Sentences, Count, Output).
+get_top_sentence([], [], Weights, Sentences, NW, NS, Sentence).
+get_top_sentence([WH|WT], [SH|ST], Weights, Sentences, NW, NS, Sentence):-
+  max_member(WH, Weights) ->
+    selectchk(WH, Weights, NW),
+    selectchk(SH, Sentences, NS),
+    Sentence = SH; get_top_sentence(WT, ST, Weights, Sentences, NW, NS, Sentence).
 
-get_summary(Weights, Sentences, Summary):-
-  get_summary_r(Weights, Sentences, Weights, Sentences, 0, Summary).
+get_summary(Weights, SText, TopList):-
+  split_string(SText, ".", " ", SList),
+  get_top_sentence(Weights, SList, Weights, SList, NW1, NS1, A),
+  get_top_sentence(NW1, NS1, NW1, NS1, NW2, NS2, B),
+  get_top_sentence(NW2, NS2, NW2, NS2, NW3, NS3, C),
+  get_top_sentence(NW3, NS3, NW3, NS3, NW4, NS4, D),
+  TopList = [A,B,C,D].
